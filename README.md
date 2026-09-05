@@ -56,7 +56,13 @@ After cleaning, our dataset contains **71,374 rows**.
 
 Below is the head of our cleaned DataFrame:
 
-PASTE YOUR REAL `teams_clean[display_cols].head().to_markdown(index=False)` TABLE HERE.
+| gameid | league | year | side | teamname | result | firstdragon | firsttower | dragons | towers | goldat10 | golddiffat10 |
+| --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- | --- |
+| ESPORTSTMNT01_2984361 | LHE | 2023 | Blue | Eclipse Gaming | 1 | 0 | 0 | 2 | 7 | 14821 | 486 |
+| ESPORTSTMNT01_2984361 | LHE | 2023 | Red | Wolf Club Esports | 0 | 1 | 1 | 3 | 8 | 14335 | -486 |
+| ESPORTSTMNT01_2984408 | LHE | 2023 | Blue | Wolf Club Esports | 0 | 1 | 1 | 3 | 5 | 16684 | 1129 |
+| ESPORTSTMNT01_2984408 | LHE | 2023 | Red | Eclipse Gaming | 1 | 0 | 0 | 2 | 10 | 15555 | -1129 |
+| ESPORTSTMNT01_2984426 | LHE | 2023 | Blue | Eclipse Gaming | 0 | 1 | 1 | 1 | 4 | 15434 | -420 |
 
 ### Univariate Analysis
 
