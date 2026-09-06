@@ -294,9 +294,7 @@ Our evaluation metric is **accuracy**. This means we compare the proportion of c
 
 **Test Statistic:** Absolute difference in accuracy between blue-side teams and red-side teams.
 
-\[
-|\text{Blue-side accuracy} - \text{Red-side accuracy}|
-\]
+**Formula:** `|Blue-side accuracy - Red-side accuracy|`
 
 **Significance Level:** 0.05
 
