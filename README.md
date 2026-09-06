@@ -182,3 +182,36 @@ This makes sense because whether a team plays on blue side or red side should no
 |---|---:|---:|---|
 | `league` | 0.8813 | 0.048 | `goldat10` missingness likely depends on `league` |
 | `side` | 0.0000 | 1.000 | `goldat10` missingness does not appear to depend on `side` |
+
+## Hypothesis Testing
+
+For our hypothesis test, we want to determine whether teams with stronger objective control have a different win rate than teams with weaker objective control.
+
+We define objective control using `total_major_objectives`, which is the sum of `dragons`, `towers`, and `barons`. Teams at or above the median number of total major objectives are placed in the **high objective-control** group, while teams below the median are placed in the **low objective-control** group.
+
+**Null Hypothesis:** Teams with stronger objective control and teams with weaker objective control have the same win rate.
+
+**Alternative Hypothesis:** Teams with stronger objective control and teams with weaker objective control have different win rates.
+
+**Test Statistic:** Absolute difference in win rates between the high objective-control group and the low objective-control group.
+
+\[
+|\text{high objective-control win rate} - \text{low objective-control win rate}|
+\]
+
+**Significance Level:** 0.05
+
+The high objective-control group had a win rate of **0.93**, while the low objective-control group had a win rate of **0.03**. The observed difference in win rates was about **0.903**.
+
+To run the hypothesis test, we used a permutation test. Under the null hypothesis, objective-control group and match result are unrelated, so we shuffled the `result` column many times and recalculated the difference in win rates for each simulation.
+
+<iframe
+  src="assets/hypothesis_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The p-value was **0.0**, meaning none of the 1000 shuffled simulations produced a difference as large as the observed difference. We interpret this as **p-value < 0.001**.
+
+Since the p-value is below our significance level of 0.05, we reject the null hypothesis. This suggests that win rate differs between teams with stronger and weaker objective control. In other words, teams with stronger objective control are much more likely to win.
