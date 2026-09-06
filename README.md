@@ -250,3 +250,27 @@ The baseline model had a training accuracy of **0.70** and a test accuracy of **
 However, this baseline model is only moderately strong. It performs better than random guessing, but it only uses `firstdragon` and `firsttower`, so it misses other important objective-control information such as total dragons, towers, Barons, and early-game gold difference.
 
 
+## Final Model
+
+For our final model, we used a decision tree classifier again, but we added more informative features related to objective control and early-game advantage.
+
+The baseline model only used `firstdragon` and `firsttower`. For the final model, we kept these two features and added three engineered features:
+
+- `first_objectives_secured`: the total number of first objectives secured by a team, calculated using `firstdragon`, `firsttower`, and `firstbaron`.
+- `total_major_objectives`: the total number of major objectives secured by a team, calculated using `dragons`, `towers`, and `barons`.
+- `early_gold_lead`: whether the team had a positive gold difference at 10 minutes.
+
+These features are useful because they summarize objective control more completely than the baseline model. Instead of only checking whether a team secured the first dragon or first tower, the final model also considers overall objective control and early gold advantage.
+
+All of the features used in the final model are quantitative features. Some are binary, such as `firstdragon`, `firsttower`, and `early_gold_lead`, while others are counts, such as `first_objectives_secured` and `total_major_objectives`.
+
+We used a `FunctionTransformer` inside an sklearn Pipeline to create the engineered features, then trained a `DecisionTreeClassifier`. We tuned the `max_depth` hyperparameter by testing different depths from 1 to 10 and selecting the smallest depth with the best validation accuracy. The best depth was **6**.
+
+| Dataset | Baseline Accuracy | Final Model Accuracy |
+|---|---:|---:|
+| Training | 0.70 | 0.95 |
+| Test | 0.70 | 0.95 |
+
+The final model improved from **0.70** test accuracy to **0.95** test accuracy. This is a large improvement over the baseline model.
+
+The training and test accuracies were both 0.95, so the final model does not show obvious overfitting. Overall, the final model performs much better because it uses stronger features that capture both objective control and early-game advantage.
