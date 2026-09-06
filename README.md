@@ -274,3 +274,43 @@ We used a `FunctionTransformer` inside an sklearn Pipeline to create the enginee
 The final model improved from **0.70** test accuracy to **0.95** test accuracy. This is a large improvement over the baseline model.
 
 The training and test accuracies were both 0.95, so the final model does not show obvious overfitting. Overall, the final model performs much better because it uses stronger features that capture both objective control and early-game advantage.
+
+## Fairness Analysis
+
+For our fairness analysis, we evaluated whether our final model performs similarly for teams on **blue side** and teams on **red side**.
+
+The two groups are:
+
+- **Group X:** Blue-side teams
+- **Group Y:** Red-side teams
+
+We chose `side` for the fairness analysis because League of Legends teams play on either blue side or red side, and we want to check whether the model performs differently depending on which side a team played on.
+
+Our evaluation metric is **accuracy**. This means we compare the proportion of correct predictions for blue-side teams and red-side teams.
+
+**Null Hypothesis:** The model is fair across side, meaning its accuracy is the same for blue-side and red-side teams.
+
+**Alternative Hypothesis:** The model is not fair across side, meaning its accuracy differs between blue-side and red-side teams.
+
+**Test Statistic:** Absolute difference in accuracy between blue-side teams and red-side teams.
+
+\[
+|\text{Blue-side accuracy} - \text{Red-side accuracy}|
+\]
+
+**Significance Level:** 0.05
+
+The model had an accuracy of about **0.95** for blue-side teams and about **0.95** for red-side teams. The observed difference in accuracy was about **0.0028**, which is very small.
+
+To test whether this difference was significant, we ran a permutation test by shuffling the `side` labels. This tests whether the observed difference in accuracy is larger than what we would expect by random chance.
+
+<iframe
+  src="assets/fairness_test.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The p-value was **0.37**, which is greater than 0.05. Therefore, we fail to reject the null hypothesis.
+
+This means we do not have evidence that the final model performs differently for blue-side and red-side teams. Based on accuracy, the model appears fair across `side`.
