@@ -140,7 +140,7 @@ TVD measures how different two distributions are. In this case, it compares the 
 
 **Alternative Hypothesis:** The distribution of `league` is different when `goldat10` is missing and when `goldat10` is not missing.
 
-**Test Statistic:** Total variation distance between the league distribution of rows where `goldat10` is missing and rows where `goldat10` is not missing.
+**Test Statistic:** Total variation distance between the league distribution of rows where `goldat10` is missing and rows where `goldat10` is not missing. 
 
 **Significance Level:** 0.05
 
