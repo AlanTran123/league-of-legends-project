@@ -215,3 +215,38 @@ To run the hypothesis test, we used a permutation test. Under the null hypothesi
 The p-value was **0.0**, meaning none of the 1000 shuffled simulations produced a difference as large as the observed difference. We interpret this as **p-value < 0.001**.
 
 Since the p-value is below our significance level of 0.05, we reject the null hypothesis. This suggests that win rate differs between teams with stronger and weaker objective control. In other words, teams with stronger objective control are much more likely to win.
+
+## Framing a Prediction Problem
+
+Our prediction problem is:
+
+**Can we predict whether a professional League of Legends team wins using objective-control and early-game statistics?**
+
+The response variable is `result`, where `1` means the team won and `0` means the team lost. This is a **binary classification** problem because there are only two possible outcomes: win or loss.
+
+For this prediction problem, we are using match statistics that would be available after objective-control and early-game statistics have been recorded. These include columns such as `dragons`, `towers`, `barons`, `firstdragon`, `firsttower`, `firstbaron`, `golddiffat10`, `xpdiffat10`, `csdiffat10`, `killsat10`, and `deathsat10`.
+
+We chose these features because they are directly related to our project question. Objective-control columns help measure how much control a team had over major map objectives, while early-game statistics help measure whether a team had an early advantage.
+
+We will use **accuracy** to evaluate our model because the response variable is balanced. In our cleaned dataset, 50% of team rows are wins and 50% are losses, so accuracy is an appropriate metric for measuring overall prediction performance.
+
+## Baseline Model
+
+For our baseline model, we predicted `result` using only two features: `firstdragon` and `firsttower`.
+
+Both features are **quantitative binary features** because they are already represented as 0 or 1. A value of 1 means the team secured that first objective, and a value of 0 means the team did not. Since these columns are already numeric, we did not need to apply any additional encoding.
+
+We used a decision tree classifier for the baseline model because our response variable, `result`, is binary. The model predicts whether a team won or lost.
+
+The baseline model was trained using an sklearn Pipeline. We split the data into training and test sets, then fit the decision tree on the training data and evaluated it using accuracy.
+
+| Dataset | Accuracy |
+|---|---:|
+| Training | 0.70 |
+| Test | 0.70 |
+
+The baseline model had a training accuracy of **0.70** and a test accuracy of **0.70**. Since the training and test accuracies are the same, the model does not appear to be overfitting.
+
+However, this baseline model is only moderately strong. It performs better than random guessing, but it only uses `firstdragon` and `firsttower`, so it misses other important objective-control information such as total dragons, towers, Barons, and early-game gold difference.
+
+
