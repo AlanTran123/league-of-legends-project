@@ -115,3 +115,70 @@ The table below compares average objective-control statistics for winning and lo
 Winning teams had higher averages for every objective-control statistic. They averaged more dragons, towers, Barons, first objectives, and total major objectives. Winning teams also had a positive average gold difference at 10 minutes, while losing teams had a negative average gold difference.
 
 This table is significant because it gives a clear summary of the relationship between objective control and winning.
+
+## Assessment of Missingness
+
+### NMAR Analysis
+
+For our missingness analysis, we focused on the column `goldat10`, which represents a team's total gold at 10 minutes. This column is important because it measures early-game strength, which connects directly to our project question about early-game objective control and winning.
+
+We do not believe `goldat10` is NMAR. The value of `goldat10` itself does not seem like the main reason it would be missing. Instead, missingness in this column is more likely related to data collection issues, league reporting differences, or whether certain professional leagues consistently recorded early-game gold statistics.
+
+An example of a column that could be NMAR is `split`. Some rows may be missing `split` because the match was not part of a traditional spring or summer split, such as an international tournament, playoffs, or another special event. In that case, the missingness could depend on the missing value itself because some competitions may not naturally have a split label.
+
+Additional data that could help explain this missingness would be a column describing the match type or event type, such as whether the match was part of a regular season, playoffs, promotion tournament, or international tournament. This extra information could help make the missingness easier to explain using observed columns.
+
+### Missingness Dependency
+
+For our missingness dependency tests, we tested whether the missingness of `goldat10` depends on other columns. We used total variation distance, or TVD, as the test statistic because the columns we compare against are categorical.
+
+TVD measures how different two distributions are. In this case, it compares the distribution of another column when `goldat10` is missing versus when `goldat10` is not missing.
+
+### Test 1: Missingness of `goldat10` vs. `league`
+
+**Null Hypothesis:** The distribution of `league` is the same when `goldat10` is missing and when `goldat10` is not missing.
+
+**Alternative Hypothesis:** The distribution of `league` is different when `goldat10` is missing and when `goldat10` is not missing.
+
+**Test Statistic:** Total variation distance between the league distribution of rows where `goldat10` is missing and rows where `goldat10` is not missing.
+
+**Significance Level:** 0.05
+
+<iframe
+  src="assets/missing_league.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed TVD was about **0.8813**, and the p-value was about **0.048**. Since the p-value is below 0.05, we reject the null hypothesis. This suggests that the missingness of `goldat10` likely depends on `league`.
+
+In other words, some leagues appear more likely to have missing early-game gold data than others.
+
+### Test 2: Missingness of `goldat10` vs. `side`
+
+**Null Hypothesis:** The distribution of `side` is the same when `goldat10` is missing and when `goldat10` is not missing.
+
+**Alternative Hypothesis:** The distribution of `side` is different when `goldat10` is missing and when `goldat10` is not missing.
+
+**Test Statistic:** Total variation distance between the side distribution of rows where `goldat10` is missing and rows where `goldat10` is not missing.
+
+**Significance Level:** 0.05
+
+<iframe
+  src="assets/missing_side.html"
+  width="800"
+  height="600"
+  frameborder="0"
+></iframe>
+
+The observed TVD was **0.0**, and the p-value was **1.0**. Since the p-value is greater than 0.05, we fail to reject the null hypothesis. This means we do not have evidence that the missingness of `goldat10` depends on `side`.
+
+This makes sense because whether a team plays on blue side or red side should not affect whether early-game gold data is recorded.
+
+### Missingness Test Summary
+
+| Compared Column | Observed TVD | P-value | Conclusion |
+|---|---:|---:|---|
+| `league` | 0.8813 | 0.048 | `goldat10` missingness likely depends on `league` |
+| `side` | 0.0000 | 1.000 | `goldat10` missingness does not appear to depend on `side` |
